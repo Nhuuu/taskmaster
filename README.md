@@ -37,3 +37,6 @@ you should connect to your production database, even in your development environ
 - download intellij
 - update application.properties
 - run 'build project'
+
+## Deployed link:
+- http://taskmaster-env.v2hyii2zyf.us-west-2.elasticbeanstalk.com/
