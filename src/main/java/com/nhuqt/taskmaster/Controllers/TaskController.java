@@ -23,6 +23,7 @@ public class TaskController {
   @PostMapping("/tasks")
   public Task addNewTask(@RequestBody Task task){
     Task t = new Task();
+    t.setAssignee(task.getAssignee());
     t.setTitle(task.getTitle());
     t.setDescription(task.getDescription());
     t.setStatus("available");

@@ -44,4 +44,6 @@ build
 !.elasticbeanstalk/*.global.yml
 
 
+# Local configuration file (sdk path, etc)
+local.properties
 application.properties

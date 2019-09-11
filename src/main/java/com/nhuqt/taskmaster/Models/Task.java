@@ -10,12 +10,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 public class Task {
 
   private String id;
+  private String assignee;
   private String title;
   private String description;
   private String status;
 
   public Task(){}
-  public Task(String title, String description, String status){
+
+  public Task(String assignee, String title, String description, String status){
+    this.assignee = assignee;
     this.title = title;
     this.description = description;
     this.status = status;
@@ -29,6 +32,15 @@ public class Task {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  @DynamoDBAttribute
+  public String getAssignee() {
+    return assignee;
+  }
+
+  public void setAssignee(String assignee) {
+    this.assignee = assignee;
   }
 
   @DynamoDBAttribute
