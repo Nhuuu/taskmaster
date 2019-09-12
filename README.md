@@ -30,6 +30,10 @@ The application should be deployed to EC2, with the database on DynamoDB.
 You should also use DynamoDB for your local application testing; in other words, 
 you should connect to your production database, even in your development environment. 
 (This is generally a bad practice, and we’ll see how to work differently soon.)
+
+A user should be able to visit the homepage of your React app and see the list of all tasks available in the database.
+React should be well-factored into at least 2 components.
+The homepage should have reasonable styling and layout. (Nothing too fancy, but it shouldn’t make the user cringe.)
 ```
 
 ## To Run:
