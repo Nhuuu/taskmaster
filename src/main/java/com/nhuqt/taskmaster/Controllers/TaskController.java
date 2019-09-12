@@ -22,11 +22,7 @@ public class TaskController {
 
   @PostMapping("/tasks")
   public Task addNewTask(@RequestBody Task task){
-    Task t = new Task();
-    t.setAssignee(task.getAssignee());
-    t.setTitle(task.getTitle());
-    t.setDescription(task.getDescription());
-    t.setStatus("available");
+    Task t = new Task(task.getAssignee(), task.getTitle(), task.getDescription());
     History h = new History("available");
     t.addHistory(h);
     taskRepository.save(t);
@@ -43,19 +39,14 @@ public class TaskController {
     Task t = taskRepository.findById(id).get();
     if(t.getStatus().equals("available")){
       t.setStatus("assigned");
-      t.addHistory(new History("assigned"));
-      taskRepository.save(t);
-    }
-    if(t.getStatus().equals("assigned")){
+    } else if(t.getStatus().equals("assigned")){
       t.setStatus("accepted");
-      t.addHistory(new History("accepted"));
-      taskRepository.save(t);
-    }
-    if(t.getStatus().equals("accepted")){
+
+    } else if(t.getStatus().equals("accepted")){
       t.setStatus("finished");
-      t.addHistory(new History("finished"));
-      taskRepository.save(t);
     }
+    t.addHistory(new History(t.getStatus()));
+    taskRepository.save(t);
     return t;
   }
 
