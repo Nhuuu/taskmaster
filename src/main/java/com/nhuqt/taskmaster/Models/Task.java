@@ -19,11 +19,11 @@ public class Task {
 
   public Task(){}
 
-  public Task(String assignee, String title, String description, String status){
+  public Task(String assignee, String title, String description){
     this.assignee = assignee;
     this.title = title;
     this.description = description;
-    this.status = status;
+    this.status = "available";
     this.history = new ArrayList<>();
   }
 

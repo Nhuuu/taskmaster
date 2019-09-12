@@ -2,8 +2,7 @@ package com.nhuqt.taskmaster.Models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @DynamoDBDocument
 public class History {
@@ -12,8 +11,7 @@ public class History {
 
   public History(){}
   public History(String action){
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-    this.date = sdf.format(new Timestamp(System.currentTimeMillis()).getTime());
+    this.date = new Date().toString();
     this.action = action;
   }
 
