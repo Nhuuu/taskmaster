@@ -1,11 +1,14 @@
 package com.nhuqt.taskmaster.Models;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+@DynamoDBDocument
 public class History {
-  String date;
-  String action;
+  private String date;
+  private String action;
 
   public History(){}
   public History(String action){
