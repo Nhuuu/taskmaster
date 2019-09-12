@@ -24,6 +24,7 @@ public class Task {
     this.title = title;
     this.description = description;
     this.status = status;
+    this.history = new ArrayList<>();
   }
 
   @DynamoDBHashKey
@@ -73,15 +74,15 @@ public class Task {
   }
 
   @DynamoDBAttribute
-  public ArrayList getHistory() {
+  public ArrayList<History> getHistory() {
     return history;
   }
 
-  public void setHistory(ArrayList history) {
+  public void setHistory(ArrayList<History> history) {
     this.history = history;
   }
 
   public void addHistory(History h){
-    history.add(h);
+    this.history.add(h);
   }
 }

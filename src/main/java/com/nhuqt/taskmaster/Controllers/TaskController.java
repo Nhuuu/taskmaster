@@ -21,19 +21,21 @@ public class TaskController {
   public List<Task> getTasks(){return (List) taskRepository.findAll();}
 
   @PostMapping("/tasks")
-  public Task addNewTask(@RequestBody String title, String description, String assignee){
+  public Task addNewTask(@RequestBody Task task){
     Task t = new Task();
-    t.setAssignee(assignee);
-    t.setTitle(title);
-    t.setDescription(description);
+    t.setAssignee(task.getAssignee());
+    t.setTitle(task.getTitle());
+    t.setDescription(task.getDescription());
     t.setStatus("available");
+    History h = new History("available");
+    t.addHistory(h);
     taskRepository.save(t);
     return t;
   }
 
   @GetMapping("/users/{name}/tasks")
   public List<Task> getUserTasks(@PathVariable String name){
-    return (List) taskRepository.findByAssignee(name);
+    return (List) taskRepository.findAllByAssignee(name);
   }
 
   @PutMapping("/tasks/{id}/state")
