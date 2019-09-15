@@ -19,7 +19,8 @@ public class TaskController {
   @Autowired
   TaskRepository taskRepository;
 
-  private S3Client s3Client;
+  @Autowired
+  S3Client s3Client;
 
   @GetMapping("/tasks")
   public List<Task> getTasks(){return (List) taskRepository.findAll();}
@@ -27,6 +28,11 @@ public class TaskController {
   @GetMapping("/users/{name}/tasks")
   public List<Task> getUserTasks(@PathVariable String name){
     return (List) taskRepository.findAllByAssignee(name);
+  }
+
+  @GetMapping("/tasks/{id}")
+  public Task getOneTask(@PathVariable String id){
+    return taskRepository.findById(id).get();
   }
 
   @PostMapping("/tasks")
@@ -78,10 +84,5 @@ public class TaskController {
     taskRepository.delete(t);
     return t;
   }
-
-
-
-  // Fetching a single task (at GET /tasks/{id})
-  // should also include the image URLs associated with that image.
 
 }
