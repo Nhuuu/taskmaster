@@ -3,9 +3,11 @@ package com.nhuqt.taskmaster.Controllers;
 
 import com.nhuqt.taskmaster.Models.History;
 import com.nhuqt.taskmaster.Models.Task;
+import com.nhuqt.taskmaster.Repositories.S3Client;
 import com.nhuqt.taskmaster.Repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,8 +19,15 @@ public class TaskController {
   @Autowired
   TaskRepository taskRepository;
 
+  private S3Client s3Client;
+
   @GetMapping("/tasks")
   public List<Task> getTasks(){return (List) taskRepository.findAll();}
+
+  @GetMapping("/users/{name}/tasks")
+  public List<Task> getUserTasks(@PathVariable String name){
+    return (List) taskRepository.findAllByAssignee(name);
+  }
 
   @PostMapping("/tasks")
   public Task addNewTask(@RequestBody Task task){
@@ -29,9 +38,13 @@ public class TaskController {
     return t;
   }
 
-  @GetMapping("/users/{name}/tasks")
-  public List<Task> getUserTasks(@PathVariable String name){
-    return (List) taskRepository.findAllByAssignee(name);
+  @PostMapping("/tasks/{id}/images")
+  public Task uploadFile(@RequestPart(value ="file") MultipartFile file, @PathVariable String id){
+    String pic = this.s3Client.uploadFile(file);
+    Task t = taskRepository.findById(id).get();
+    t.setPic(pic);
+    taskRepository.save(t);
+    return t;
   }
 
   @PutMapping("/tasks/{id}/state")
@@ -41,7 +54,6 @@ public class TaskController {
       t.setStatus("assigned");
     } else if(t.getStatus().equals("assigned")){
       t.setStatus("accepted");
-
     } else if(t.getStatus().equals("accepted")){
       t.setStatus("finished");
     }
@@ -66,5 +78,10 @@ public class TaskController {
     taskRepository.delete(t);
     return t;
   }
+
+
+
+  // Fetching a single task (at GET /tasks/{id})
+  // should also include the image URLs associated with that image.
 
 }

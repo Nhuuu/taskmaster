@@ -16,6 +16,7 @@ public class Task {
   private String description;
   private String status;
   private ArrayList<History> history;
+  private String pic;
 
   public Task(){}
 
@@ -25,6 +26,7 @@ public class Task {
     this.description = description;
     this.status = "available";
     this.history = new ArrayList<>();
+    this.pic = "";
   }
 
   @DynamoDBHashKey
@@ -85,4 +87,14 @@ public class Task {
   public void addHistory(History h){
     this.history.add(h);
   }
+
+  @DynamoDBAttribute
+  public String getPic() {
+    return pic;
+  }
+
+  public void setPic(String pic) {
+    this.pic = pic;
+  }
+
 }
